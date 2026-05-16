@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AvtoSugurta Pro | To'lov</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header card">
+            <a class="brand" href="/">
+                <span>AVTO</span>SUGURTA
+            </a>
+            <nav class="site-nav" aria-label="Asosiy menyu">
+                <a href="/#kalkulyator" data-i18n="nav.calculator">Kalkulyator</a>
+                <a href="/home-insurance" data-i18n="nav.homeInsurance">Uy sug'urtasi</a>
+                <a href="/contact" data-i18n="nav.contact">Kontakt</a>
+
+                <details class="nav-more">
+                    <summary data-i18n="nav.more">Boshqalar</summary>
+                    <div class="nav-menu">
+                        <a href="/" data-i18n="nav.home">Asosiy menyu</a>
+                        <a href="/packages" data-i18n="nav.packages">Paketlar</a>
+                        <a href="/reviews" data-i18n="nav.reviews">Fikrlar</a>
+                        <a href="/claim-guide" data-i18n="nav.claim">Avariya</a>
+                        <a href="/faq" data-i18n="nav.faq">FAQ</a>
+                        <a class="hidden" id="adminLink" href="/admin" data-i18n="nav.admin">Admin</a>
+                        <div class="nav-sep" aria-hidden="true"></div>
+                        <a href="/#afzallik" data-i18n="nav.benefits">Afzalliklar</a>
+                        <a href="/#hamkorlar" data-i18n="nav.partners">Hamkorlar</a>
+                        <a href="/#jarayon" data-i18n="nav.process">Jarayon</a>
+                    </div>
+                </details>
+            </nav>
+            <div class="header-actions">
+                <label class="lang-wrap" for="languageSwitcher">
+                    <span data-i18n="lang.label">Til</span>
+                    <select id="languageSwitcher" aria-label="Language switcher">
+                        <option value="uz">UZ</option>
+                        <option value="en">EN</option>
+                        <option value="ru">RU</option>
+                    </select>
+                </label>
+                <button type="button" class="nav-cta" id="openAuthBtn" data-i18n="auth.open">Kirish / Register</button>
+                <div class="user-badge hidden" id="userBadge">
+                    <span id="userName">-</span>
+                    <button type="button" id="logoutBtn" data-i18n="auth.logout">Chiqish</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="payment card">
+            <div class="page-head">
+                <h1 data-i18n="payment.title">To'lov sahifasi</h1>
+                <p data-i18n="payment.subtitle">Buyurtmani tasdiqlang va statusni "paid" holatiga o'tkazing.</p>
+            </div>
+
+            <div class="payment-top">
+                <div class="payment-meta">
+                    <span class="pill">#{{ order["id"] }}</span>
+                    <span class="pill" id="paymentStatus">{{ order["status"] }}</span>
+                </div>
+                <div class="payment-actions">
+                    <a class="action-btn ghost-btn" href="/orders/{{ order['id'] }}/pdf">PDF</a>
+                    <button type="button" class="action-btn primary-btn" id="payOrderBtn" data-order-id="{{ order['id'] }}" data-i18n="payment.payBtn">To'lovni tasdiqlash</button>
+                </div>
+            </div>
+
+            {% if order["car_photo_path"] %}
+            <div class="photo-card">
+                <img src="{{ order['car_photo_path'] }}" alt="Yuklangan mashina rasmi">
+            </div>
+            {% endif %}
+
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span data-i18n="payment.model">Model</span>
+                    <strong>{{ model_name }}</strong>
+                </div>
+                <div class="summary-item">
+                    <span data-i18n="payment.engine">Dvigatel</span>
+                    <strong>{{ order["engine_cc"] }} sm3</strong>
+                </div>
+                <div class="summary-item">
+                    <span data-i18n="payment.year">Yil</span>
+                    <strong>{{ order["vehicle_year"] }}</strong>
+                </div>
+                <div class="summary-item">
+                    <span data-i18n="payment.package">Paket</span>
+                    <strong>{{ order["package"] }}</strong>
+                </div>
+                <div class="summary-item">
+                    <span data-i18n="payment.price">Yillik premium</span>
+                    <strong>{{ order["price"] }} UZS</strong>
+                </div>
+                <div class="summary-item">
+                    <span data-i18n="payment.monthly">Oyiga</span>
+                    <strong>{{ order["monthly"] }} UZS</strong>
+                </div>
+            </div>
+
+            <p id="paymentMessage" class="form-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <footer class="site-footer">
+            <p data-i18n="footer.text">AvtoSugurta Pro 2026. Tezkor hisob, aniq tarif, ishonchli himoya.</p>
+        </footer>
+    </div>
+
+    <div class="auth-modal hidden" id="authModal" aria-hidden="true">
+        <div class="auth-dialog card">
+            <button type="button" class="auth-close" id="authCloseBtn" aria-label="Close">x</button>
+            <h3 data-i18n="auth.title">Hisobga kirish</h3>
+            <div class="auth-tabs">
+                <button type="button" class="active" data-auth-tab="login" data-i18n="auth.loginTab">Kirish</button>
+                <button type="button" data-auth-tab="register" data-i18n="auth.registerTab">Ro'yxatdan o'tish</button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <label for="loginEmail" data-i18n="auth.email">Email</label>
+                <input id="loginEmail" type="email" required>
+                <label for="loginPassword" data-i18n="auth.password">Parol</label>
+                <input id="loginPassword" type="password" minlength="6" required>
+                <button type="submit" data-i18n="auth.loginBtn">Kirish</button>
+            </form>
+
+            <form id="registerForm" class="auth-form hidden">
+                <label for="registerName" data-i18n="auth.name">To'liq ism</label>
+                <input id="registerName" type="text" minlength="2" required>
+                <label for="registerEmail" data-i18n="auth.email">Email</label>
+                <input id="registerEmail" type="email" required>
+                <label for="registerPassword" data-i18n="auth.password">Parol</label>
+                <input id="registerPassword" type="password" minlength="6" required>
+                <button type="submit" data-i18n="auth.registerBtn">Ro'yxatdan o'tish</button>
+            </form>
+
+            <p id="authMessage" class="auth-message" role="status" aria-live="polite"></p>
+        </div>
+    </div>
+
+    <script>
+        window.APP_CONFIG = Object.assign({}, window.APP_CONFIG, {
+            googleClientId: "{{ google_client_id|e }}"
+        });
+    </script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>

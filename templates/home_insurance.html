@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AvtoSugurta Pro | Uy sug'urtasi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header card">
+            <a class="brand" href="/">
+                <span>AVTO</span>SUGURTA
+            </a>
+            <nav class="site-nav" aria-label="Asosiy menyu">
+                <a href="/#kalkulyator" data-i18n="nav.calculator">Kalkulyator</a>
+                <a href="/home-insurance" data-i18n="nav.homeInsurance">Uy sug'urtasi</a>
+                <a href="/contact" data-i18n="nav.contact">Kontakt</a>
+
+                <details class="nav-more">
+                    <summary data-i18n="nav.more">Boshqalar</summary>
+                    <div class="nav-menu">
+                        <a href="/" data-i18n="nav.home">Asosiy menyu</a>
+                        <a href="/packages" data-i18n="nav.packages">Paketlar</a>
+                        <a href="/reviews" data-i18n="nav.reviews">Fikrlar</a>
+                        <a href="/claim-guide" data-i18n="nav.claim">Avariya</a>
+                        <a href="/faq" data-i18n="nav.faq">FAQ</a>
+                        <a class="hidden" id="adminLink" href="/admin" data-i18n="nav.admin">Admin</a>
+                        <div class="nav-sep" aria-hidden="true"></div>
+                        <a href="/#afzallik" data-i18n="nav.benefits">Afzalliklar</a>
+                        <a href="/#hamkorlar" data-i18n="nav.partners">Hamkorlar</a>
+                        <a href="/#jarayon" data-i18n="nav.process">Jarayon</a>
+                    </div>
+                </details>
+            </nav>
+            <div class="header-actions">
+                <label class="lang-wrap" for="languageSwitcher">
+                    <span data-i18n="lang.label">Til</span>
+                    <select id="languageSwitcher" aria-label="Language switcher">
+                        <option value="uz">UZ</option>
+                        <option value="en">EN</option>
+                        <option value="ru">RU</option>
+                    </select>
+                </label>
+                <button type="button" class="nav-cta" id="openAuthBtn" data-i18n="auth.open">Kirish / Register</button>
+                <div class="user-badge hidden" id="userBadge">
+                    <span id="userName">-</span>
+                    <button type="button" id="logoutBtn" data-i18n="auth.logout">Chiqish</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="packages card">
+            <div class="page-head">
+                <h1 data-i18n="home.title">Uy sug'urtasi</h1>
+                <p data-i18n="home.subtitle">Uy maydoni, hudud va xavfsizlik parametrlariga qarab yillik premiumni hisoblang.</p>
+                <a class="action-btn ghost-btn" href="/#kalkulyator" data-i18n="home.backToAuto">Avto sug'urtaga qaytish</a>
+            </div>
+        </section>
+
+        <main class="workspace" id="homeCalculator">
+            <section class="calculator-panel card">
+                <div class="panel-head">
+                    <h2 data-i18n="home.calc.title">Uy sug'urtasi kalkulyator</h2>
+                    <p data-i18n="home.calc.subtitle">Parametrlarni kiriting va 1 daqiqada aniq narx oling.</p>
+                </div>
+
+                <form id="homePremiumForm" class="premium-form">
+                    <div class="field-grid">
+                        <label class="field" for="home_type">
+                            <span data-i18n="home.calc.type">Uy turi</span>
+                            <select id="home_type" name="home_type"></select>
+                        </label>
+
+                        <label class="field" for="home_area">
+                            <span data-i18n="home.calc.area">Maydon (m2)</span>
+                            <input id="home_area" name="home_area" type="number" min="15" max="1500" step="1" placeholder="70">
+                        </label>
+
+                        <label class="field" for="home_construction">
+                            <span data-i18n="home.calc.construction">Qurilish turi</span>
+                            <select id="home_construction" name="home_construction"></select>
+                        </label>
+
+                        <label class="field" for="home_region">
+                            <span data-i18n="home.calc.region">Hudud</span>
+                            <select id="home_region" name="home_region"></select>
+                        </label>
+
+                        <label class="field" for="home_security">
+                            <span data-i18n="home.calc.security">Xavfsizlik</span>
+                            <select id="home_security" name="home_security"></select>
+                        </label>
+
+                        <label class="field" for="year_mode">
+                            <span data-i18n="home.calc.yearMode">Uy qurilgan yili (usul)</span>
+                            <select id="year_mode" name="year_mode">
+                                <option value="select" data-i18n="calc.yearModeSelect">Ro'yxatdan tanlash</option>
+                                <option value="manual" data-i18n="calc.yearModeManual">Qo'lda kiritish</option>
+                            </select>
+                        </label>
+
+                        <label class="field" id="yearSelectWrap" for="year_select">
+                            <span data-i18n="home.calc.yearSelect">Qurilgan yil (tanlash)</span>
+                            <select id="year_select" name="year_select"></select>
+                        </label>
+
+                        <label class="field hidden" id="yearManualWrap" for="year_manual">
+                            <span data-i18n="home.calc.yearManual">Qurilgan yil (qo'lda)</span>
+                            <input id="year_manual" name="year_manual" type="number" min="1950" max="2030" placeholder="2010">
+                        </label>
+
+                        <label class="field" for="home_package">
+                            <span data-i18n="home.calc.package">Sug'urta paketi</span>
+                            <select id="home_package" name="home_package">
+                                <option value="basic" data-i18n="calc.packageBasic">Basic - Majburiy himoya</option>
+                                <option value="comfort" data-i18n="calc.packageComfort">Comfort - Kengaytirilgan</option>
+                                <option value="max" data-i18n="calc.packageMax">Max - To'liq himoya</option>
+                            </select>
+                        </label>
+
+                        <label class="field" for="home_no_claim_years">
+                            <span data-i18n="home.calc.noClaim">Zarar bo'lmagan yillar</span>
+                            <select id="home_no_claim_years" name="home_no_claim_years">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button id="homeCalculateBtn" class="calculate-btn" type="submit" data-i18n="home.calc.submit">Premiumni hisoblash</button>
+                        <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="result-panel card">
+                <div class="result-head">
+                    <h3 data-i18n="result.title">Hisob natijasi</h3>
+                    <p><span data-i18n="result.updated">Yangilangan vaqt</span>: <span id="updatedAt">-</span></p>
+                </div>
+
+                <div class="result-total">
+                    <span data-i18n="result.yearly">Yillik premium</span>
+                    <strong id="result">0 so'm</strong>
+                </div>
+
+                <div class="result-monthly">
+                    <span data-i18n="result.monthly">Oyiga taxminan</span>
+                    <b id="monthlyResult">0 so'm</b>
+                </div>
+
+                <div class="result-actions">
+                    <a class="action-btn primary-btn" href="/contact" data-i18n="home.calc.contact">Konsultatsiya olish</a>
+                    <a class="action-btn ghost-btn" href="/packages" data-i18n="home.calc.packages">Paketlarni ko'rish</a>
+                </div>
+
+                <ul id="breakdownList" class="breakdown-list">
+                    <li class="placeholder" data-i18n="result.placeholder">Hisob-kitobdan keyin tarif tafsilotlari shu yerda chiqadi.</li>
+                </ul>
+
+                <div class="chart-wrap">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="site-footer">
+            <p data-i18n="footer.text">AvtoSugurta Pro 2026. Tezkor hisob, aniq tarif, ishonchli himoya.</p>
+        </footer>
+    </div>
+
+    <div class="auth-modal hidden" id="authModal" aria-hidden="true">
+        <div class="auth-dialog card">
+            <button type="button" class="auth-close" id="authCloseBtn" aria-label="Close">x</button>
+            <h3 data-i18n="auth.title">Hisobga kirish</h3>
+            <div class="auth-tabs">
+                <button type="button" class="active" data-auth-tab="login" data-i18n="auth.loginTab">Kirish</button>
+                <button type="button" data-auth-tab="register" data-i18n="auth.registerTab">Ro'yxatdan o'tish</button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <label for="loginEmail" data-i18n="auth.email">Email</label>
+                <input id="loginEmail" type="email" required>
+                <label for="loginPassword" data-i18n="auth.password">Parol</label>
+                <input id="loginPassword" type="password" minlength="6" required>
+                <button type="submit" data-i18n="auth.loginBtn">Kirish</button>
+            </form>
+
+            <form id="registerForm" class="auth-form hidden">
+                <label for="registerName" data-i18n="auth.name">To'liq ism</label>
+                <input id="registerName" type="text" minlength="2" required>
+                <label for="registerEmail" data-i18n="auth.email">Email</label>
+                <input id="registerEmail" type="email" required>
+                <label for="registerPassword" data-i18n="auth.password">Parol</label>
+                <input id="registerPassword" type="password" minlength="6" required>
+                <button type="submit" data-i18n="auth.registerBtn">Ro'yxatdan o'tish</button>
+            </form>
+
+            <p id="authMessage" class="auth-message" role="status" aria-live="polite"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.APP_CONFIG = Object.assign({}, window.APP_CONFIG, {
+            googleClientId: "{{ google_client_id|e }}"
+        });
+    </script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>

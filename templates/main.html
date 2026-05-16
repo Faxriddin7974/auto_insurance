@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AvtoSugurta Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header card">
+            <a class="brand" href="/">
+                <span>AVTO</span>SUGURTA
+            </a>
+            <nav class="site-nav" aria-label="Asosiy menyu">
+                <a href="/#kalkulyator" data-i18n="nav.calculator">Kalkulyator</a>
+                <a href="/home-insurance" data-i18n="nav.homeInsurance">Uy sug'urtasi</a>
+                <a href="/contact" data-i18n="nav.contact">Kontakt</a>
+
+                <details class="nav-more">
+                    <summary data-i18n="nav.more">Boshqalar</summary>
+                    <div class="nav-menu">
+                        <a href="/" data-i18n="nav.home">Asosiy menyu</a>
+                        <a href="/packages" data-i18n="nav.packages">Paketlar</a>
+                        <a href="/reviews" data-i18n="nav.reviews">Fikrlar</a>
+                        <a href="/claim-guide" data-i18n="nav.claim">Avariya</a>
+                        <a href="/faq" data-i18n="nav.faq">FAQ</a>
+                        <a class="hidden" id="adminLink" href="/admin" data-i18n="nav.admin">Admin</a>
+                        <div class="nav-sep" aria-hidden="true"></div>
+                        <a href="/#afzallik" data-i18n="nav.benefits">Afzalliklar</a>
+                        <a href="/#hamkorlar" data-i18n="nav.partners">Hamkorlar</a>
+                        <a href="/#jarayon" data-i18n="nav.process">Jarayon</a>
+                    </div>
+                </details>
+            </nav>
+            <div class="header-actions">
+                <label class="lang-wrap" for="languageSwitcher">
+                    <span data-i18n="lang.label">Til</span>
+                    <select id="languageSwitcher" aria-label="Language switcher">
+                        <option value="uz">UZ</option>
+                        <option value="en">EN</option>
+                        <option value="ru">RU</option>
+                    </select>
+                </label>
+                <button type="button" class="nav-cta" id="openAuthBtn" data-i18n="auth.open">Kirish / Register</button>
+                <div class="user-badge hidden" id="userBadge">
+                    <span id="userName">-</span>
+                    <button type="button" id="logoutBtn" data-i18n="auth.logout">Chiqish</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero card" id="afzallik">
+            <div class="hero-copy">
+                <p class="eyebrow" data-i18n="hero.eyebrow">Digital Insurance Platform</p>
+                <h1 data-i18n="hero.title">Avto sug'urtani 30 soniyada aniq hisoblang</h1>
+                <p class="lead" data-i18n="hero.lead">
+                    AvtoSugurta Pro platformasi sizga shaffof tarif, tezkor hisob-kitob va bir nechta paketlarni solishtirish imkonini beradi.
+                </p>
+                <div class="hero-metrics">
+                    <div>
+                        <strong id="heroMetricUsers">50 000+</strong>
+                        <span data-i18n="hero.metric1">Faol mijoz</span>
+                    </div>
+                    <div>
+                        <strong id="heroMetricSuccess">98.4%</strong>
+                        <span data-i18n="hero.metric2">Muvaffaqiyatli to'lov</span>
+                    </div>
+                    <div>
+                        <strong>24/7</strong>
+                        <span data-i18n="hero.metric3">Qo'llab-quvvatlash</span>
+                    </div>
+                </div>
+                <ul class="hero-points">
+                    <li data-i18n="hero.point1">Top 20 model bo'yicha mos tariflar</li>
+                    <li data-i18n="hero.point2">Modelga mos dvigatel hajmini tanlash</li>
+                    <li data-i18n="hero.point3">Yilni select yoki qo'lda kiritish imkoniyati</li>
+                </ul>
+                <div class="hero-actions">
+                    <a class="action-btn primary-btn" href="/packages" data-i18n="hero.ctaPackages">Paketlarni ko'rish</a>
+                    <a class="action-btn ghost-btn" href="/contact" data-i18n="hero.ctaContact">Kontakt</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <img src="/static/ravon_models.jpeg" alt="Sug'urta uchun avtomobillar">
+                <div class="visual-badge">
+                    <small data-i18n="hero.badgeSmall">Pro Risk Model</small>
+                    <strong data-i18n="hero.badgeStrong">Smart Pricing</strong>
+                </div>
+            </div>
+        </section>
+
+        <main class="workspace" id="kalkulyator">
+            <section class="calculator-panel card">
+                <div class="panel-head">
+                    <h2 data-i18n="calc.title">Premium kalkulyator</h2>
+                    <p data-i18n="calc.subtitle">Top modellardan tanlang va individual narxni oling.</p>
+                </div>
+
+                <form id="premiumForm" novalidate>
+                    <div class="field-grid">
+                        <label class="field" for="car_model">
+                            <span data-i18n="calc.model">Avtomobil modeli</span>
+                            <select id="car_model" name="car_model"></select>
+                        </label>
+
+                        <label class="field" for="engine_select">
+                            <span data-i18n="calc.engine">Dvigatel hajmi (sm3)</span>
+                            <select id="engine_select" name="engine_select"></select>
+                        </label>
+
+                        <label class="field" for="year_mode">
+                            <span data-i18n="calc.yearMode">Yil kiritish usuli</span>
+                            <select id="year_mode" name="year_mode">
+                                <option value="select" data-i18n="calc.yearModeSelect">Ro'yxatdan tanlash</option>
+                                <option value="manual" data-i18n="calc.yearModeManual">Qo'lda kiritish</option>
+                            </select>
+                        </label>
+
+                        <label class="field" id="yearSelectWrap" for="year_select">
+                            <span data-i18n="calc.yearSelect">Mashina yili (tanlash)</span>
+                            <select id="year_select" name="year_select"></select>
+                        </label>
+
+                        <label class="field hidden" id="yearManualWrap" for="year_manual">
+                            <span data-i18n="calc.yearManual">Mashina yili (qo'lda)</span>
+                            <input id="year_manual" name="year_manual" type="number" min="1980" max="2030" placeholder="Masalan: 2022" data-i18n-placeholder="calc.yearPlaceholder">
+                        </label>
+
+                        <label class="field" for="package">
+                            <span data-i18n="calc.package">Sug'urta paketi</span>
+                            <select id="package" name="package">
+                                <option value="basic" data-i18n="calc.packageBasic">Basic - Majburiy himoya</option>
+                                <option value="comfort" data-i18n="calc.packageComfort">Comfort - Kengaytirilgan</option>
+                                <option value="max" data-i18n="calc.packageMax">Max - To'liq himoya</option>
+                            </select>
+                        </label>
+
+                        <label class="field" for="rating">
+                            <span data-i18n="calc.driver">Haydovchi toifasi</span>
+                            <select id="rating" name="rating">
+                                <option value="experienced" data-i18n="calc.driverExperienced">Tajribali haydovchi</option>
+                                <option value="standard" data-i18n="calc.driverStandard">Standart profil</option>
+                                <option value="new" data-i18n="calc.driverNew">Yangi haydovchi</option>
+                            </select>
+                        </label>
+
+                        <label class="field field-wide" for="no_claim_years">
+                            <span data-i18n="calc.noClaim">Avariya qilmagan yillar</span>
+                            <select id="no_claim_years" name="no_claim_years">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </label>
+
+                        <label class="field field-wide" for="car_photo">
+                            <span data-i18n="calc.photo">Mashina rasmi</span>
+                            <input id="car_photo" name="car_photo" type="file" accept="image/png,image/jpeg,image/webp">
+                            <small class="field-hint" data-i18n="calc.photoHint">PNG, JPG yoki WEBP. Maksimal hajm 5 MB.</small>
+                        </label>
+                    </div>
+
+                    <div class="upload-preview hidden" id="carPhotoPreview">
+                        <img id="carPhotoPreviewImage" src="" alt="Car preview">
+                        <div class="upload-preview-meta">
+                            <strong id="carPhotoName">-</strong>
+                            <span id="carPhotoStatus"></span>
+                        </div>
+                        <button type="button" class="mini-btn" id="removeCarPhotoBtn" data-i18n="calc.photoRemove">Rasmni olib tashlash</button>
+                    </div>
+
+                    <div class="form-actions">
+                        <button id="calculateBtn" class="calculate-btn" type="submit" data-i18n="calc.submit">Premiumni hisoblash</button>
+                        <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="result-panel card">
+                <div class="result-head">
+                    <h3 data-i18n="result.title">Hisob natijasi</h3>
+                    <p><span data-i18n="result.updated">Yangilangan vaqt</span>: <span id="updatedAt">-</span></p>
+                </div>
+
+                <div class="result-total">
+                    <span data-i18n="result.yearly">Yillik premium</span>
+                    <strong id="result">0 so'm</strong>
+                </div>
+
+                <div class="result-monthly">
+                    <span data-i18n="result.monthly">Oyiga taxminan</span>
+                    <b id="monthlyResult">0 so'm</b>
+                </div>
+
+                <div class="result-actions">
+                    <button type="button" id="orderBtn" class="action-btn primary-btn">Buyurtma berish</button>
+                    <a id="paymentLink" class="action-btn ghost-btn hidden" href="#" data-i18n="payment.goto">To'lovga o'tish</a>
+                    <button type="button" id="saveCarBtn" class="action-btn ghost-btn">Mashinani saqlash</button>
+                    <button type="button" id="pdfBtn" class="action-btn ghost-btn" disabled>PDF yuklash</button>
+                    <button type="button" id="telegramBtn" class="action-btn ghost-btn" disabled>Telegramga yuborish</button>
+                </div>
+                <p id="orderMessage" class="form-message" role="status" aria-live="polite"></p>
+
+                <ul id="breakdownList" class="breakdown-list">
+                    <li class="placeholder" data-i18n="result.placeholder">Hisob-kitobdan keyin tarif tafsilotlari shu yerda chiqadi.</li>
+                </ul>
+
+                <div class="chart-wrap">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </aside>
+        </main>
+
+        <section class="extra-grid">
+            <article class="extra-card card">
+                <h3 data-i18n="extra.coverageTitle">Qamrov imkoniyatlari</h3>
+                <p data-i18n="extra.coverageDesc">Basic, Comfort va Max paketlarida turli risklar bo'yicha moslashuvchan himoya.</p>
+            </article>
+            <article class="extra-card card">
+                <h3 data-i18n="extra.supportTitle">24/7 xizmat</h3>
+                <p data-i18n="extra.supportDesc">Shikoyat va avariya holatlari uchun tungi navbatchi operatorlar va tezkor javob.</p>
+            </article>
+            <article class="extra-card card">
+                <h3 data-i18n="extra.paymentTitle">Qulay to'lov</h3>
+                <p data-i18n="extra.paymentDesc">Yillik premiumni oylik bo'lib to'lash va avtomatik eslatma imkoniyati.</p>
+            </article>
+        </section>
+
+        <section class="process card" id="jarayon">
+            <h3 data-i18n="process.title">Ishlash jarayoni</h3>
+            <div class="process-grid">
+                <div>
+                    <span>01</span>
+                    <p data-i18n="process.step1">Model va parametrlarni tanlang</p>
+                </div>
+                <div>
+                    <span>02</span>
+                    <p data-i18n="process.step2">Tarif va breakdownni ko'ring</p>
+                </div>
+                <div>
+                    <span>03</span>
+                    <p data-i18n="process.step3">Login qilib buyurtmani yakunlang</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cabinet card" id="cabinet">
+            <div class="cabinet-head">
+                <h3>Shaxsiy kabinet</h3>
+                <p>Kirishdan keyin buyurtmalar va saqlangan mashinalar shu yerda chiqadi.</p>
+            </div>
+            <div class="cabinet-grid">
+                <div class="cabinet-box">
+                    <h4>Buyurtmalar tarixi</h4>
+                    <ul id="orderHistoryList" class="cabinet-list">
+                        <li class="placeholder">Hozircha buyurtmalar yo'q.</li>
+                    </ul>
+                </div>
+                <div class="cabinet-box">
+                    <h4>Saqlangan mashinalar</h4>
+                    <ul id="savedCarsList" class="cabinet-list">
+                        <li class="placeholder">Saqlangan mashinalar yo'q.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin card hidden" id="adminPanel">
+            <div class="cabinet-head">
+                <h3>Admin panel</h3>
+                <p>Koeffitsient va Telegram sozlamalari boshqaruvi.</p>
+            </div>
+            <div class="admin-grid">
+                <form id="factorForm" class="admin-form">
+                    <label for="adminModel">Model koeffitsienti</label>
+                    <select id="adminModel"></select>
+                    <input id="adminFactor" type="number" step="0.01" min="0.50" max="2.50" placeholder="Masalan: 1.12">
+                    <button type="submit" class="action-btn primary-btn">Koeffitsientni saqlash</button>
+                </form>
+                <form id="telegramForm" class="admin-form">
+                    <label for="tgToken">Telegram bot token</label>
+                    <input id="tgToken" type="text" placeholder="123456:ABC...">
+                    <label for="tgChat">Telegram chat id</label>
+                    <input id="tgChat" type="text" placeholder="-1001234567890">
+                    <button type="submit" class="action-btn primary-btn">Telegram sozlamasini saqlash</button>
+                </form>
+            </div>
+
+            <div class="divider-line"></div>
+
+            <div class="cabinet-grid">
+                <div class="cabinet-box">
+                    <h4>Buyurtmalar (so'nggi 50)</h4>
+                    <ul id="adminOrdersList" class="cabinet-list">
+                        <li class="placeholder">Hozircha buyurtma yo'q.</li>
+                    </ul>
+                </div>
+                <div class="cabinet-box">
+                    <h4>Kontakt xabarlari</h4>
+                    <ul id="adminLeadsList" class="cabinet-list">
+                        <li class="placeholder">Hozircha xabar yo'q.</li>
+                    </ul>
+                </div>
+                <div class="cabinet-box">
+                    <h4>Reviewlar (moderatsiya)</h4>
+                    <ul id="adminReviewsList" class="cabinet-list">
+                        <li class="placeholder">Hozircha review yo'q.</li>
+                    </ul>
+                </div>
+            </div>
+            <p id="adminMessage" class="form-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="partners card" id="hamkorlar">
+            <p data-i18n="partners.title">Hamkor kompaniyalar</p>
+            <div class="partner-grid">
+                <span>UZBEKINVEST</span>
+                <span>KAFOLAT</span>
+                <span>ALSKOM</span>
+                <span>INSON</span>
+                <span>GROSS</span>
+                <span>ORIENT</span>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p data-i18n="footer.text">AvtoSugurta Pro 2026. Tezkor hisob, aniq tarif, ishonchli himoya.</p>
+        </footer>
+    </div>
+
+    <div class="auth-modal hidden" id="authModal" aria-hidden="true">
+        <div class="auth-dialog card">
+            <button type="button" class="auth-close" id="authCloseBtn" aria-label="Close">x</button>
+            <h3 data-i18n="auth.title">Hisobga kirish</h3>
+            <div class="auth-tabs">
+                <button type="button" class="active" data-auth-tab="login" data-i18n="auth.loginTab">Kirish</button>
+                <button type="button" data-auth-tab="register" data-i18n="auth.registerTab">Ro'yxatdan o'tish</button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <label for="loginEmail" data-i18n="auth.email">Email</label>
+                <input id="loginEmail" type="email" required>
+                <label for="loginPassword" data-i18n="auth.password">Parol</label>
+                <input id="loginPassword" type="password" minlength="6" required>
+                <button type="submit" data-i18n="auth.loginBtn">Kirish</button>
+            </form>
+
+            <form id="registerForm" class="auth-form hidden">
+                <label for="registerName" data-i18n="auth.name">To'liq ism</label>
+                <input id="registerName" type="text" minlength="2" required>
+                <label for="registerEmail" data-i18n="auth.email">Email</label>
+                <input id="registerEmail" type="email" required>
+                <label for="registerPassword" data-i18n="auth.password">Parol</label>
+                <input id="registerPassword" type="password" minlength="6" required>
+                <button type="submit" data-i18n="auth.registerBtn">Ro'yxatdan o'tish</button>
+            </form>
+
+            <p id="authMessage" class="auth-message" role="status" aria-live="polite"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.APP_CONFIG = Object.assign({}, window.APP_CONFIG, {
+            googleClientId: "{{ google_client_id|e }}"
+        });
+    </script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>
